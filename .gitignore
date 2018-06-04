@@ -1,0 +1,25 @@
+# Java class files
+*.class
+
+# Generated files
+bin/
+gen/
+out/
+
+# Gradle files
+.gradle
+build/
+
+# IntelliJ
+*.iml
+.idea
+
+.navigation
+captures/
+output.json
+
+# Log Files
+*.log
+
+# Local configuration file (sdk path, etc)
+local.properties

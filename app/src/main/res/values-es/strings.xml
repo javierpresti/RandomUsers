@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_user_grid">Usuarios Aleatorios</string>
+    <string name="title_user_detail">Detalles del usuario</string>
+    <string name="usergrid_json_error">Error de conexión</string>
+    <string name="usergrid_retry">Reintentar</string>
+
+    <string name="userdetail_username">Usuario</string>
+    <string name="userdetail_firstname">Nombre</string>
+    <string name="userdetail_lastname">Apellido</string>
+    <string name="userdetail_email">Email</string>
+</resources>

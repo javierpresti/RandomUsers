@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">RandomUsers</string>
+    <string name="title_user_grid">Random Users</string>
+    <string name="title_user_detail">User Detail</string>
+    <string name="usergrid_json_error">Connectivity error</string>
+    <string name="usergrid_retry">Retry</string>
+
+    <string name="userdetail_username">Username</string>
+    <string name="userdetail_firstname">First Name</string>
+    <string name="userdetail_lastname">Last Name</string>
+    <string name="userdetail_email">Email address</string>
+</resources>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout style="@style/UserDetailLayout">
+
+        <TextView
+            android:id="@+id/user_username"
+            style="@style/UserDetailData"
+            tools:text="username" />
+
+        <TextView
+            android:id="@+id/user_t_username"
+            style="@style/UserDetailTitle"
+            android:text="@string/userdetail_username" />
+    </LinearLayout>
+
+    <View style="@style/UserDetailDivider" />
+
+    <LinearLayout style="@style/UserDetailLayout">
+
+        <TextView
+            android:id="@+id/user_firstname"
+            style="@style/UserDetailData"
+            tools:text="firstname" />
+
+        <TextView
+            android:id="@+id/user_t_firstname"
+            style="@style/UserDetailTitle"
+            android:text="@string/userdetail_firstname" />
+    </LinearLayout>
+
+    <View style="@style/UserDetailDivider" />
+
+    <LinearLayout style="@style/UserDetailLayout">
+
+        <TextView
+            android:id="@+id/user_lastname"
+            style="@style/UserDetailData"
+            tools:text="lastname" />
+
+        <TextView
+            android:id="@+id/user_t_lastname"
+            style="@style/UserDetailTitle"
+            android:text="@string/userdetail_lastname" />
+    </LinearLayout>
+
+    <View style="@style/UserDetailDivider" />
+
+    <LinearLayout style="@style/UserDetailLayout">
+
+        <TextView
+            android:id="@+id/user_email"
+            style="@style/UserDetailData"
+            tools:text="email" />
+
+        <TextView
+            android:id="@+id/user_t_email"
+            style="@style/UserDetailTitle"
+            android:text="@string/userdetail_email" />
+    </LinearLayout>
+
+</LinearLayout>
