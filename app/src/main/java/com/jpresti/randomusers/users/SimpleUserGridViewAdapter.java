@@ -56,6 +56,7 @@ public class SimpleUserGridViewAdapter extends BaseAdapter {
                     @Override
                     public void onResponse() {
                         notifyDataSetChanged();
+                        mParentActivity.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                     }
 
                     @Override
