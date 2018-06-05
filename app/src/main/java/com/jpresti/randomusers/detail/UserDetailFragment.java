@@ -72,8 +72,13 @@ public class UserDetailFragment extends Fragment {
         // Show the data content
         if (user != null) {
             NetworkImageView nImageView = getActivity().findViewById(R.id.toolbar_image);
-            RandomUserRequester.getInstance(getContext()).requestImage(
-                    getContext(), user.getImage(), nImageView, R.drawable.ic_error_18dp);
+            /* nImageView will be null if screen orientation is changed from landscape to portrait,
+             * so we keep the state of the image in landscape mode
+             */
+            if (nImageView != null) {
+                RandomUserRequester.getInstance(getContext()).requestImage(
+                        getContext(), user.getImage(), nImageView, R.drawable.ic_error_18dp);
+            }
             final CollapsingToolbarLayout appBarLayout = getActivity().findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
                 appBarLayout.setTitle(user.getUsername());
