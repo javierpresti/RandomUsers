@@ -51,16 +51,19 @@ public class SimpleUserGridViewAdapter extends BaseAdapter {
     }
 
     protected void setUpRequest() {
+        final View loadingPanel = mParentActivity.findViewById(R.id.loadingPanel);
+        loadingPanel.setVisibility(View.VISIBLE);
         RandomUserRequester.getInstance(mParentActivity)
                 .setUpRequest(mParentActivity, new RandomUserRequester.DataListener() {
                     @Override
                     public void onResponse() {
                         notifyDataSetChanged();
-                        mParentActivity.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                        loadingPanel.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onErrorResponse(String error) {
+                        loadingPanel.setVisibility(View.GONE);
                         final Snackbar snackbar = Snackbar.make(mParentActivity.findViewById(R.id.frameLayout),
                                 R.string.usergrid_json_error, Snackbar.LENGTH_INDEFINITE);
 
