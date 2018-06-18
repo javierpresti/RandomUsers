@@ -35,8 +35,8 @@ public class UserDetailActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putParcelable(UserDetailFragment.ARG_USER,
-                    getIntent().getParcelableExtra(UserDetailFragment.ARG_USER));
+            arguments.putString(UserDetailFragment.ARG_USER,
+                    getIntent().getStringExtra(UserDetailFragment.ARG_USER));
             UserDetailFragment fragment = new UserDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

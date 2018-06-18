@@ -46,21 +46,21 @@ public class UserDetailFragment extends Fragment {
 
         if (getArguments().containsKey(ARG_USER)) {
             // Load the data content specified by the fragment arguments
-            setUser((UsersContent.User) getArguments().getParcelable(ARG_USER));
+            setUser(getArguments().getString(ARG_USER));
         }
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(STATE_USER, user);
+        outState.putString(STATE_USER, user.toJson());
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState != null) {
-            setUser((UsersContent.User) savedInstanceState.getParcelable(STATE_USER));
+            setUser(savedInstanceState.getString(STATE_USER));
         }
     }
 
@@ -101,8 +101,8 @@ public class UserDetailFragment extends Fragment {
         return toUpper;
     }
 
-    protected void setUser(UsersContent.User user) {
-        this.user = user;
+    protected void setUser(String jsonUser) {
+        this.user = UsersContent.User.fromJson(jsonUser);
     }
 
 }

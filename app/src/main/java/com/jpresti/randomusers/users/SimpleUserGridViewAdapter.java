@@ -26,7 +26,7 @@ public class SimpleUserGridViewAdapter extends BaseAdapter {
             UsersContent.User user = (UsersContent.User) view.getTag();
             if (mTwoPane) {
                 Bundle arguments = new Bundle();
-                arguments.putParcelable(UserDetailFragment.ARG_USER, user);
+                arguments.putString(UserDetailFragment.ARG_USER, user.toJson());
                 UserDetailFragment fragment = new UserDetailFragment();
                 fragment.setArguments(arguments);
                 mParentActivity.getSupportFragmentManager().beginTransaction()
@@ -35,7 +35,7 @@ public class SimpleUserGridViewAdapter extends BaseAdapter {
             } else {
                 Context context = view.getContext();
                 Intent intent = new Intent(context, UserDetailActivity.class);
-                intent.putExtra(UserDetailFragment.ARG_USER, user);
+                intent.putExtra(UserDetailFragment.ARG_USER, user.toJson());
 
                 context.startActivity(intent);
             }
