@@ -12,21 +12,22 @@ import android.widget.BaseAdapter;
 import com.android.volley.toolbox.NetworkImageView;
 import com.jpresti.randomusers.R;
 import com.jpresti.randomusers.data.RandomUserRequester;
-import com.jpresti.randomusers.data.UsersContent;
+import com.jpresti.randomusers.data.User;
 import com.jpresti.randomusers.detail.UserDetailActivity;
 import com.jpresti.randomusers.detail.UserDetailFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleUserGridViewAdapter extends BaseAdapter {
 
     private final UserGridActivity mParentActivity;
     private final boolean mTwoPane;
-    protected List<UsersContent.User> users;
+    protected List<User> users = new ArrayList<>();
     private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            UsersContent.User user = (UsersContent.User) view.getTag();
+            User user = (User) view.getTag();
             if (mTwoPane) {
                 Bundle arguments = new Bundle();
                 arguments.putString(UserDetailFragment.ARG_USER, user.toJson());
@@ -55,9 +56,9 @@ public class SimpleUserGridViewAdapter extends BaseAdapter {
         final View loadingPanel = mParentActivity.findViewById(R.id.loadingPanel);
         loadingPanel.setVisibility(View.VISIBLE);
         RandomUserRequester.getInstance(mParentActivity).requestUsers(mParentActivity,
-                new RandomUserRequester.DataListener<List<UsersContent.User>>() {
+                new RandomUserRequester.DataListener<List<User>>() {
                     @Override
-                    public void onResponse(List<UsersContent.User> usersResponse) {
+                    public void onResponse(List<User> usersResponse) {
                         users = usersResponse;
                         notifyDataSetChanged();
                         loadingPanel.setVisibility(View.GONE);
@@ -107,7 +108,7 @@ public class SimpleUserGridViewAdapter extends BaseAdapter {
         } else {
             nImageView = (NetworkImageView) convertView;
         }
-        UsersContent.User user = users.get(position);
+        User user = users.get(position);
         RandomUserRequester.getInstance(mParentActivity).requestImage(mParentActivity,
                 user.getThumbnail(), nImageView, R.drawable.ic_loading_18dp, R.drawable.ic_error_18dp);
         nImageView.setTag(user);

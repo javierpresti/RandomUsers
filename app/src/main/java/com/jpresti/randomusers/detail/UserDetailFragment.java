@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
 import com.jpresti.randomusers.R;
 import com.jpresti.randomusers.data.RandomUserRequester;
-import com.jpresti.randomusers.data.UsersContent;
+import com.jpresti.randomusers.data.User;
 import com.jpresti.randomusers.users.UserGridActivity;
 
 /**
@@ -32,7 +32,7 @@ public class UserDetailFragment extends Fragment {
     /**
      * The data content this fragment is presenting.
      */
-    private UsersContent.User user;
+    private User user;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the fragment
@@ -102,7 +102,7 @@ public class UserDetailFragment extends Fragment {
     }
 
     protected void setUser(String jsonUser) {
-        this.user = UsersContent.User.fromJson(jsonUser);
+        this.user = User.fromJson(jsonUser);
     }
 
 }

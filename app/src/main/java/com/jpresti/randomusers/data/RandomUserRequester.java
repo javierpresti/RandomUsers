@@ -17,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RandomUserRequester {
@@ -26,6 +27,8 @@ public class RandomUserRequester {
 
     protected static NetworkRequester networkRequester;
     protected static RandomUserRequester instance;
+    protected static final List<User> USERS = new ArrayList<>();
+
 
     protected RandomUserRequester(Context context) {
         networkRequester = NetworkRequester.getInstance(context);
@@ -42,7 +45,7 @@ public class RandomUserRequester {
         return RANDOMUSER_URL + "?results=" + QUANTITY_RESULTS;
     }
 
-    protected void setUpRequest(Context context, final DataListener<List<UsersContent.User>> listener) {
+    protected void setUpRequest(Context context, final DataListener<List<User>> listener) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 RandomUserRequester.getUrl(),
@@ -52,7 +55,7 @@ public class RandomUserRequester {
                     public void onResponse(JSONObject response) {
                         try {
                             getUsers(response);
-                            listener.onResponse(UsersContent.getUsers());
+                            listener.onResponse(getUsers());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -74,12 +77,12 @@ public class RandomUserRequester {
         resetUsers();
         JSONArray results = jsonObject.getJSONArray("results");
         for (int i = 0; i < results.length(); i++) {
-            UsersContent.addItem(mkUser(results.getJSONObject(i)));
+            addItem(mkUser(results.getJSONObject(i)));
         }
     }
 
-    protected static UsersContent.User mkUser(JSONObject jsonObject) throws JSONException {
-        return new UsersContent.User(
+    protected static User mkUser(JSONObject jsonObject) throws JSONException {
+        return new User(
                 jsonObject.getJSONObject("login").getString("username"),
                 jsonObject.getJSONObject("name").getString("first"),
                 jsonObject.getJSONObject("name").getString("last"),
@@ -122,8 +125,8 @@ public class RandomUserRequester {
         networkRequester.cancelRequests(TAG);
     }
 
-    public void requestUsers(Context context, DataListener<List<UsersContent.User>> dataListener) {
-        List<UsersContent.User> users = UsersContent.getUsers();
+    public void requestUsers(Context context, DataListener<List<User>> dataListener) {
+        List<User> users = getUsers();
         if (users.isEmpty()) {
             setUpRequest(context, dataListener);
         } else {
@@ -132,7 +135,15 @@ public class RandomUserRequester {
     }
 
     public static void resetUsers() {
-        UsersContent.getUsers().clear();
+        getUsers().clear();
+    }
+
+    protected static void addItem(User item) {
+        getUsers().add(item);
+    }
+
+    protected static List<User> getUsers() {
+        return USERS;
     }
 
     public interface DataListener<T> {
