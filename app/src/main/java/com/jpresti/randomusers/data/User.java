@@ -4,9 +4,7 @@ import com.google.gson.Gson;
 
 public class User {
     protected static Gson gson;
-    protected static long idCount = 0;
 
-    protected final String id;
     protected final String username;
     protected final String firstName;
     protected final String lastName;
@@ -16,7 +14,6 @@ public class User {
 
     public User(String username, String firstName, String lastName, String email,
                 String thumbnail, String image) {
-        this.id = String.valueOf(idCount++);
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -38,10 +35,6 @@ public class User {
 
     public String toJson() {
         return getGson().toJson(this);
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getUsername() {

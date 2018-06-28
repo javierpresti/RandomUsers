@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.GridView;
 
 import com.jpresti.randomusers.R;
-import com.jpresti.randomusers.data.RandomUserRequester;
+import com.jpresti.randomusers.data.external.RandomUserRequester;
 import com.jpresti.randomusers.detail.UserDetailActivity;
 
 /**

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.jpresti.randomusers.R;
-import com.jpresti.randomusers.data.RandomUserRequester;
+import com.jpresti.randomusers.data.external.RandomUserRequester;
 import com.jpresti.randomusers.data.User;
 import com.jpresti.randomusers.users.UserGridActivity;
 
@@ -76,8 +76,8 @@ public class UserDetailFragment extends Fragment {
              * so we keep the state of the image in landscape mode
              */
             if (nImageView != null) {
-                RandomUserRequester.getInstance(getContext()).requestImage(
-                        getContext(), user.getImage(), nImageView, R.drawable.ic_error_18dp);
+                RandomUserRequester.getInstance(getContext()).requestImage(user.getImage(),
+                        nImageView, R.drawable.ic_error_18dp);
             }
             final CollapsingToolbarLayout appBarLayout = getActivity().findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {

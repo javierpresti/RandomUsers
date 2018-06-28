@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.jpresti.randomusers.R;
-import com.jpresti.randomusers.data.RandomUserRequester;
+import com.jpresti.randomusers.data.external.RandomUserRequester;
 import com.jpresti.randomusers.data.User;
 import com.jpresti.randomusers.detail.UserDetailActivity;
 import com.jpresti.randomusers.detail.UserDetailFragment;
@@ -55,7 +55,7 @@ public class SimpleUserGridViewAdapter extends BaseAdapter {
     protected void setUpRequest() {
         final View loadingPanel = mParentActivity.findViewById(R.id.loadingPanel);
         loadingPanel.setVisibility(View.VISIBLE);
-        RandomUserRequester.getInstance(mParentActivity).requestUsers(mParentActivity,
+        RandomUserRequester.getInstance(mParentActivity).requestUsers(
                 new RandomUserRequester.DataListener<List<User>>() {
                     @Override
                     public void onResponse(List<User> usersResponse) {
@@ -109,8 +109,8 @@ public class SimpleUserGridViewAdapter extends BaseAdapter {
             nImageView = (NetworkImageView) convertView;
         }
         User user = users.get(position);
-        RandomUserRequester.getInstance(mParentActivity).requestImage(mParentActivity,
-                user.getThumbnail(), nImageView, R.drawable.ic_loading_18dp, R.drawable.ic_error_18dp);
+        RandomUserRequester.getInstance(mParentActivity).requestImage(user.getThumbnail(),
+                nImageView, R.drawable.ic_loading_18dp, R.drawable.ic_error_18dp);
         nImageView.setTag(user);
         nImageView.setOnClickListener(mOnClickListener);
         return nImageView;

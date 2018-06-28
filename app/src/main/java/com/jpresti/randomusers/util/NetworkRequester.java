@@ -8,17 +8,20 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.jpresti.randomusers.data.RandomUserRequester;
+import com.jpresti.randomusers.data.external.RandomUserRequester;
 
 public class NetworkRequester {
 
     protected static NetworkRequester instance;
+    protected static final int IMAGE_CACHE_SIZE = RandomUserRequester.QUANTITY_RESULTS;
 
     protected RequestQueue requestQueue;
     protected ImageLoader imageLoader;
+    protected Context applicationContext;
 
     protected NetworkRequester(Context context) {
-        requestQueue = getRequestQueue(context);
+        applicationContext = context.getApplicationContext();
+        requestQueue = getRequestQueue();
     }
 
     public static synchronized NetworkRequester getInstance(Context context) {
@@ -28,19 +31,18 @@ public class NetworkRequester {
         return instance;
     }
 
-    public RequestQueue getRequestQueue(Context context) {
+    public RequestQueue getRequestQueue() {
         if (requestQueue == null) {
-            requestQueue = Volley.newRequestQueue(context.getApplicationContext());
+            requestQueue = Volley.newRequestQueue(applicationContext);
         }
         return requestQueue;
     }
 
-    public ImageLoader getImageLoader(Context context) {
+    public ImageLoader getImageLoader() {
         if (imageLoader == null) {
-            imageLoader = new ImageLoader(getRequestQueue(context),
+            imageLoader = new ImageLoader(getRequestQueue(),
                     new ImageLoader.ImageCache() {
-                        private final LruCache<String, Bitmap> cache =
-                                new LruCache<>(RandomUserRequester.QUANTITY_RESULTS);
+                        private final LruCache<String, Bitmap> cache = new LruCache<>(IMAGE_CACHE_SIZE);
 
                         @Override
                         public Bitmap getBitmap(String url) {
@@ -57,8 +59,8 @@ public class NetworkRequester {
         return imageLoader;
     }
 
-    public <T> void addToRequestQueue(Context context, Request<T> req) {
-        getRequestQueue(context).add(req);
+    public <T> void addToRequestQueue(Request<T> req) {
+        getRequestQueue().add(req);
     }
 
     public void cancelRequests(String tag) {

@@ -1,4 +1,4 @@
-package com.jpresti.randomusers.data;
+package com.jpresti.randomusers.data.external;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
+import com.jpresti.randomusers.data.User;
 import com.jpresti.randomusers.users.SimpleUserGridViewAdapter;
 import com.jpresti.randomusers.util.NetworkRequester;
 
@@ -29,7 +30,6 @@ public class RandomUserRequester {
     protected static RandomUserRequester instance;
     protected static final List<User> USERS = new ArrayList<>();
 
-
     protected RandomUserRequester(Context context) {
         networkRequester = NetworkRequester.getInstance(context);
     }
@@ -45,7 +45,16 @@ public class RandomUserRequester {
         return RANDOMUSER_URL + "?results=" + QUANTITY_RESULTS;
     }
 
-    protected void setUpRequest(Context context, final DataListener<List<User>> listener) {
+    public void requestUsers(DataListener<List<User>> dataListener) {
+        List<User> users = getUsers();
+        if (users.isEmpty()) {
+            setUpRequest(dataListener);
+        } else {
+            dataListener.onResponse(users);
+        }
+    }
+
+    protected void setUpRequest(final DataListener<List<User>> listener) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 RandomUserRequester.getUrl(),
@@ -70,7 +79,7 @@ public class RandomUserRequester {
                 }
         );
         jsonObjectRequest.setTag(TAG);
-        networkRequester.addToRequestQueue(context, jsonObjectRequest);
+        networkRequester.addToRequestQueue(jsonObjectRequest);
     }
 
     protected static void getUsers(JSONObject jsonObject) throws JSONException {
@@ -91,18 +100,18 @@ public class RandomUserRequester {
                 jsonObject.getJSONObject("picture").getString("large"));
     }
 
-    public void requestImage(Context context, String imageUrl, final NetworkImageView nImageView, int defaultImage, int errorImage) {
+    public void requestImage(String imageUrl, final NetworkImageView nImageView, int defaultImage, int errorImage) {
         nImageView.setDefaultImageResId(defaultImage);
-        requestImage(context, imageUrl, nImageView, errorImage);
+        requestImage(imageUrl, nImageView, errorImage);
     }
 
-    public void requestImage(Context context, String imageUrl, final NetworkImageView nImageView, int errorImage) {
+    public void requestImage(String imageUrl, final NetworkImageView nImageView, int errorImage) {
         nImageView.setErrorImageResId(errorImage);
-        nImageView.setImageUrl(imageUrl, networkRequester.getImageLoader(context));
+        nImageView.setImageUrl(imageUrl, networkRequester.getImageLoader());
     }
 
 
-    public void requestImage(Context context, String imageUrl, final DataListener<Bitmap> listener) {
+    public void requestImage(String imageUrl, final DataListener<Bitmap> listener) {
         ImageRequest imageRequest = new ImageRequest(
                 imageUrl,
                 new Response.Listener<Bitmap>() {
@@ -118,20 +127,11 @@ public class RandomUserRequester {
                     }
                 }
         );
-        networkRequester.addToRequestQueue(context, imageRequest);
+        networkRequester.addToRequestQueue(imageRequest);
     }
 
     public void cancelRequests() {
         networkRequester.cancelRequests(TAG);
-    }
-
-    public void requestUsers(Context context, DataListener<List<User>> dataListener) {
-        List<User> users = getUsers();
-        if (users.isEmpty()) {
-            setUpRequest(context, dataListener);
-        } else {
-            dataListener.onResponse(users);
-        }
     }
 
     public static void resetUsers() {
