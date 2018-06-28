@@ -17,6 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class RandomUserRequester {
     public static final int QUANTITY_RESULTS = 50;
     protected static final String RANDOMUSER_URL = "https://randomuser.me/api/";
@@ -40,7 +42,7 @@ public class RandomUserRequester {
         return RANDOMUSER_URL + "?results=" + QUANTITY_RESULTS;
     }
 
-    public void setUpRequest(Context context, final DataListener listener) {
+    protected void setUpRequest(Context context, final DataListener<List<UsersContent.User>> listener) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 RandomUserRequester.getUrl(),
@@ -50,7 +52,7 @@ public class RandomUserRequester {
                     public void onResponse(JSONObject response) {
                         try {
                             getUsers(response);
-                            listener.onResponse();
+                            listener.onResponse(UsersContent.getUsers());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -60,7 +62,7 @@ public class RandomUserRequester {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d(SimpleUserGridViewAdapter.class.getName(), "JSON Error: " + error.getMessage());
-                        listener.onErrorResponse(error.getMessage());
+                        listener.onError(error.getMessage());
                     }
                 }
         );
@@ -69,7 +71,7 @@ public class RandomUserRequester {
     }
 
     protected static void getUsers(JSONObject jsonObject) throws JSONException {
-        UsersContent.getUsers().clear();
+        resetUsers();
         JSONArray results = jsonObject.getJSONArray("results");
         for (int i = 0; i < results.length(); i++) {
             UsersContent.addItem(mkUser(results.getJSONObject(i)));
@@ -97,7 +99,7 @@ public class RandomUserRequester {
     }
 
 
-    public void requestImage(Context context, String imageUrl, final BitmapListener listener) {
+    public void requestImage(Context context, String imageUrl, final DataListener<Bitmap> listener) {
         ImageRequest imageRequest = new ImageRequest(
                 imageUrl,
                 new Response.Listener<Bitmap>() {
@@ -109,7 +111,7 @@ public class RandomUserRequester {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        listener.onErrorResponse(error.getMessage());
+                        listener.onError(error.getMessage());
                     }
                 }
         );
@@ -120,16 +122,23 @@ public class RandomUserRequester {
         networkRequester.cancelRequests(TAG);
     }
 
-    public interface DataListener {
-        void onResponse();
-
-        void onErrorResponse(String error);
+    public void requestUsers(Context context, DataListener<List<UsersContent.User>> dataListener) {
+        List<UsersContent.User> users = UsersContent.getUsers();
+        if (users.isEmpty()) {
+            setUpRequest(context, dataListener);
+        } else {
+            dataListener.onResponse(users);
+        }
     }
 
-    public interface BitmapListener {
-        void onResponse(Bitmap response);
+    public static void resetUsers() {
+        UsersContent.getUsers().clear();
+    }
 
-        void onErrorResponse(String error);
+    public interface DataListener<T> {
+        void onResponse(T t);
+
+        void onError(String error);
     }
 
 }

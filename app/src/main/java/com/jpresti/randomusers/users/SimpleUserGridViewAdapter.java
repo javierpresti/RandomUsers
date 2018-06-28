@@ -16,10 +16,13 @@ import com.jpresti.randomusers.data.UsersContent;
 import com.jpresti.randomusers.detail.UserDetailActivity;
 import com.jpresti.randomusers.detail.UserDetailFragment;
 
+import java.util.List;
+
 public class SimpleUserGridViewAdapter extends BaseAdapter {
 
     private final UserGridActivity mParentActivity;
     private final boolean mTwoPane;
+    protected List<UsersContent.User> users;
     private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -45,24 +48,23 @@ public class SimpleUserGridViewAdapter extends BaseAdapter {
     public SimpleUserGridViewAdapter(UserGridActivity parent, boolean twoPane) {
         mParentActivity = parent;
         mTwoPane = twoPane;
-        if (UsersContent.getUsers().isEmpty()) {
-            setUpRequest();
-        }
+        setUpRequest();
     }
 
     protected void setUpRequest() {
         final View loadingPanel = mParentActivity.findViewById(R.id.loadingPanel);
         loadingPanel.setVisibility(View.VISIBLE);
-        RandomUserRequester.getInstance(mParentActivity)
-                .setUpRequest(mParentActivity, new RandomUserRequester.DataListener() {
+        RandomUserRequester.getInstance(mParentActivity).requestUsers(mParentActivity,
+                new RandomUserRequester.DataListener<List<UsersContent.User>>() {
                     @Override
-                    public void onResponse() {
+                    public void onResponse(List<UsersContent.User> usersResponse) {
+                        users = usersResponse;
                         notifyDataSetChanged();
                         loadingPanel.setVisibility(View.GONE);
                     }
 
                     @Override
-                    public void onErrorResponse(String error) {
+                    public void onError(String error) {
                         loadingPanel.setVisibility(View.GONE);
                         final Snackbar snackbar = Snackbar.make(mParentActivity.findViewById(R.id.frameLayout),
                                 R.string.usergrid_json_error, Snackbar.LENGTH_INDEFINITE);
@@ -80,7 +82,7 @@ public class SimpleUserGridViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return UsersContent.getUsers().size();
+        return users.size();
     }
 
     @Override
@@ -105,7 +107,7 @@ public class SimpleUserGridViewAdapter extends BaseAdapter {
         } else {
             nImageView = (NetworkImageView) convertView;
         }
-        UsersContent.User user = UsersContent.getUsers().get(position);
+        UsersContent.User user = users.get(position);
         RandomUserRequester.getInstance(mParentActivity).requestImage(mParentActivity,
                 user.getThumbnail(), nImageView, R.drawable.ic_loading_18dp, R.drawable.ic_error_18dp);
         nImageView.setTag(user);

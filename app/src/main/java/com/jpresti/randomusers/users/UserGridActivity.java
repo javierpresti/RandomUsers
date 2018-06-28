@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.GridView;
 
 import com.jpresti.randomusers.R;
-import com.jpresti.randomusers.data.UsersContent;
+import com.jpresti.randomusers.data.RandomUserRequester;
 import com.jpresti.randomusers.detail.UserDetailActivity;
 
 /**
@@ -57,7 +57,7 @@ public class UserGridActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        UsersContent.getUsers().clear();
+        RandomUserRequester.resetUsers();
     }
 
     @Override
