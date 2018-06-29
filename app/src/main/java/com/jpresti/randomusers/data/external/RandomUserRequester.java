@@ -11,7 +11,6 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.jpresti.randomusers.data.User;
-import com.jpresti.randomusers.users.SimpleUserGridViewAdapter;
 import com.jpresti.randomusers.util.NetworkRequester;
 
 import org.json.JSONArray;
@@ -73,7 +72,7 @@ public class RandomUserRequester {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d(SimpleUserGridViewAdapter.class.getName(), "JSON Error: " + error.getMessage());
+                        Log.d(RandomUserRequester.class.getName(), "JSON Error: " + error.getMessage());
                         listener.onError(error.getMessage());
                     }
                 }

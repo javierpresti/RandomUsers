@@ -16,13 +16,12 @@
     This layout is a two-pane layout for the Users
     master/detail flow.
     -->
-
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/user_grid"
+    <android.support.v7.widget.RecyclerView
         style="@style/UsersGrid"
         android:layout_width="@dimen/item_width"
-        tools:context="com.jpresti.randomusers.users.UserGridActivity" />
+        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+        tools:context="com.jpresti.randomusers.users.UserGridActivity"
+        tools:listitem="@layout/item_image_grid" />
 
     <LinearLayout
         android:layout_width="0dp"
