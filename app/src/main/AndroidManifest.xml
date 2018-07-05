@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".users.UserGridActivity"
-            android:label="@string/title_user_grid"
+            android:label="@string/usergrid_title"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
         </activity>
         <activity
             android:name=".detail.UserDetailActivity"
-            android:label="@string/title_user_detail"
+            android:label="@string/userdetail_title"
             android:parentActivityName=".users.UserGridActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

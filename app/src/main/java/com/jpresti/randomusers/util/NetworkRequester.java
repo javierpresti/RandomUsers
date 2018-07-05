@@ -12,51 +12,52 @@ import com.jpresti.randomusers.data.external.RandomUserRequester;
 
 public class NetworkRequester {
 
-    protected static NetworkRequester instance;
+    protected static NetworkRequester sInstance;
     protected static final int IMAGE_CACHE_SIZE = RandomUserRequester.QUANTITY_RESULTS;
 
-    protected RequestQueue requestQueue;
-    protected ImageLoader imageLoader;
-    protected Context applicationContext;
+    protected RequestQueue mRequestQueue;
+    protected ImageLoader mImageLoader;
+    protected Context mApplicationContext;
 
     protected NetworkRequester(Context context) {
-        applicationContext = context.getApplicationContext();
-        requestQueue = getRequestQueue();
+        mApplicationContext = context.getApplicationContext();
+        mRequestQueue = getRequestQueue();
     }
 
     public static synchronized NetworkRequester getInstance(Context context) {
-        if (instance == null) {
-            instance = new NetworkRequester(context);
+        if (sInstance == null) {
+            sInstance = new NetworkRequester(context);
         }
-        return instance;
+        return sInstance;
     }
 
     public RequestQueue getRequestQueue() {
-        if (requestQueue == null) {
-            requestQueue = Volley.newRequestQueue(applicationContext);
+        if (mRequestQueue == null) {
+            mRequestQueue = Volley.newRequestQueue(mApplicationContext);
         }
-        return requestQueue;
+        return mRequestQueue;
     }
 
     public ImageLoader getImageLoader() {
-        if (imageLoader == null) {
-            imageLoader = new ImageLoader(getRequestQueue(),
+        if (mImageLoader == null) {
+            mImageLoader = new ImageLoader(getRequestQueue(),
                     new ImageLoader.ImageCache() {
-                        private final LruCache<String, Bitmap> cache = new LruCache<>(IMAGE_CACHE_SIZE);
+                        private final LruCache<String, Bitmap> mCache =
+                                new LruCache<>(IMAGE_CACHE_SIZE);
 
                         @Override
                         public Bitmap getBitmap(String url) {
-                            return cache.get(url);
+                            return mCache.get(url);
                         }
 
                         @Override
                         public void putBitmap(String url, Bitmap bitmap) {
-                            cache.put(url, bitmap);
+                            mCache.put(url, bitmap);
                         }
                     }
             );
         }
-        return imageLoader;
+        return mImageLoader;
     }
 
     public <T> void addToRequestQueue(Request<T> req) {
@@ -64,8 +65,8 @@ public class NetworkRequester {
     }
 
     public void cancelRequests(String tag) {
-        if (requestQueue != null) {
-            requestQueue.cancelAll(tag);
+        if (mRequestQueue != null) {
+            mRequestQueue.cancelAll(tag);
         }
     }
 

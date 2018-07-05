@@ -8,12 +8,11 @@
     <LinearLayout style="@style/UserDetailLayout">
 
         <TextView
-            android:id="@+id/user_username"
+            android:id="@+id/us_text_username"
             style="@style/UserDetailData"
             tools:text="username" />
 
         <TextView
-            android:id="@+id/user_t_username"
             style="@style/UserDetailTitle"
             android:text="@string/userdetail_username" />
     </LinearLayout>
@@ -23,12 +22,11 @@
     <LinearLayout style="@style/UserDetailLayout">
 
         <TextView
-            android:id="@+id/user_firstname"
+            android:id="@+id/us_text_firstname"
             style="@style/UserDetailData"
             tools:text="firstname" />
 
         <TextView
-            android:id="@+id/user_t_firstname"
             style="@style/UserDetailTitle"
             android:text="@string/userdetail_firstname" />
     </LinearLayout>
@@ -38,12 +36,11 @@
     <LinearLayout style="@style/UserDetailLayout">
 
         <TextView
-            android:id="@+id/user_lastname"
+            android:id="@+id/us_text_lastname"
             style="@style/UserDetailData"
             tools:text="lastname" />
 
         <TextView
-            android:id="@+id/user_t_lastname"
             style="@style/UserDetailTitle"
             android:text="@string/userdetail_lastname" />
     </LinearLayout>
@@ -53,12 +50,11 @@
     <LinearLayout style="@style/UserDetailLayout">
 
         <TextView
-            android:id="@+id/user_email"
+            android:id="@+id/us_text_email"
             style="@style/UserDetailData"
             tools:text="email" />
 
         <TextView
-            android:id="@+id/user_t_email"
             style="@style/UserDetailTitle"
             android:text="@string/userdetail_email" />
     </LinearLayout>

@@ -18,29 +18,33 @@ import java.util.List;
  * {@link RecyclerView.Adapter} that can display a {@link User}
  * image and makes a call to the specified {@link UsersFragment.OnGridFragmentInteractionListener}.
  */
-public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerViewAdapter.ViewHolder> {
+public class UserRecyclerViewAdapter
+        extends RecyclerView.Adapter<UserRecyclerViewAdapter.ViewHolder> {
 
-    protected Context context;
+    protected Context mContext;
     private final List<User> mValues;
     private final UsersFragment.OnGridFragmentInteractionListener mListener;
 
-    public UserRecyclerViewAdapter(Context context, List<User> items, UsersFragment.OnGridFragmentInteractionListener listener) {
-        this.context = context;
+    public UserRecyclerViewAdapter(Context context, List<User> items,
+                                   UsersFragment.OnGridFragmentInteractionListener listener) {
+        mContext = context;
         mValues = items;
         mListener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image_grid, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_image_grid, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        RandomUserRequester.getInstance(context).requestImage(holder.mItem.getThumbnail(),
-                (NetworkImageView) holder.mImageView, R.drawable.ic_loading_18dp, R.drawable.ic_error_18dp);
+        RandomUserRequester.getInstance(mContext)
+                .requestImage(holder.mItem.getThumbnail(), (NetworkImageView) holder.mImageView,
+                        R.drawable.ic_loading_18dp, R.drawable.ic_error_18dp);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +71,7 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mImageView = view.findViewById(R.id.grid_userImage);
+            mImageView = view.findViewById(R.id.image_grid_user);
         }
     }
 }

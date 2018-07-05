@@ -5,21 +5,21 @@ import com.google.gson.Gson;
 public class User {
     protected static Gson gson;
 
-    protected final String username;
-    protected final String firstName;
-    protected final String lastName;
-    protected final String email;
-    protected final String thumbnail;
-    protected final String image;
+    protected final String mUsername;
+    protected final String mFirstName;
+    protected final String mLastName;
+    protected final String mEmail;
+    protected final String mThumbnail;
+    protected final String mImage;
 
     public User(String username, String firstName, String lastName, String email,
                 String thumbnail, String image) {
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.thumbnail = thumbnail;
-        this.image = image;
+        mUsername = username;
+        mFirstName = firstName;
+        mLastName = lastName;
+        mEmail = email;
+        mThumbnail = thumbnail;
+        mImage = image;
     }
 
     protected static Gson getGson() {
@@ -38,26 +38,26 @@ public class User {
     }
 
     public String getUsername() {
-        return username;
+        return mUsername;
     }
 
     public String getFirstName() {
-        return firstName;
+        return mFirstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return mLastName;
     }
 
     public String getEmail() {
-        return email;
+        return mEmail;
     }
 
     public String getThumbnail() {
-        return thumbnail;
+        return mThumbnail;
     }
 
     public String getImage() {
-        return image;
+        return mImage;
     }
 }

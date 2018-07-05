@@ -2,7 +2,6 @@ package com.jpresti.randomusers.data.external;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -11,6 +10,7 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.jpresti.randomusers.data.User;
+import com.jpresti.randomusers.util.LogUtils;
 import com.jpresti.randomusers.util.NetworkRequester;
 
 import org.json.JSONArray;
@@ -25,19 +25,19 @@ public class RandomUserRequester {
     protected static final String RANDOMUSER_URL = "https://randomuser.me/api/";
     protected static final String TAG = "NetworkRequester";
 
-    protected static NetworkRequester networkRequester;
-    protected static RandomUserRequester instance;
     protected static final List<User> USERS = new ArrayList<>();
+    protected static NetworkRequester sNetworkRequester;
+    protected static RandomUserRequester sInstance;
 
     protected RandomUserRequester(Context context) {
-        networkRequester = NetworkRequester.getInstance(context);
+        sNetworkRequester = NetworkRequester.getInstance(context);
     }
 
     public static synchronized RandomUserRequester getInstance(Context context) {
-        if (instance == null) {
-            instance = new RandomUserRequester(context);
+        if (sInstance == null) {
+            sInstance = new RandomUserRequester(context);
         }
-        return instance;
+        return sInstance;
     }
 
     protected static String getUrl() {
@@ -72,13 +72,13 @@ public class RandomUserRequester {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d(RandomUserRequester.class.getName(), "JSON Error: " + error.getMessage());
+                        LogUtils.d(RandomUserRequester.class, "JSON Error: " + error.getMessage());
                         listener.onError(error.getMessage());
                     }
                 }
         );
         jsonObjectRequest.setTag(TAG);
-        networkRequester.addToRequestQueue(jsonObjectRequest);
+        sNetworkRequester.addToRequestQueue(jsonObjectRequest);
     }
 
     protected static void getUsers(JSONObject jsonObject) throws JSONException {
@@ -99,14 +99,15 @@ public class RandomUserRequester {
                 jsonObject.getJSONObject("picture").getString("large"));
     }
 
-    public void requestImage(String imageUrl, final NetworkImageView nImageView, int defaultImage, int errorImage) {
+    public void requestImage(String imageUrl, final NetworkImageView nImageView, int defaultImage,
+                             int errorImage) {
         nImageView.setDefaultImageResId(defaultImage);
         requestImage(imageUrl, nImageView, errorImage);
     }
 
     public void requestImage(String imageUrl, final NetworkImageView nImageView, int errorImage) {
         nImageView.setErrorImageResId(errorImage);
-        nImageView.setImageUrl(imageUrl, networkRequester.getImageLoader());
+        nImageView.setImageUrl(imageUrl, sNetworkRequester.getImageLoader());
     }
 
 
@@ -126,11 +127,11 @@ public class RandomUserRequester {
                     }
                 }
         );
-        networkRequester.addToRequestQueue(imageRequest);
+        sNetworkRequester.addToRequestQueue(imageRequest);
     }
 
     public void cancelRequests() {
-        networkRequester.cancelRequests(TAG);
+        sNetworkRequester.cancelRequests(TAG);
     }
 
     public static void resetUsers() {

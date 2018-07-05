@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jpresti.randomusers.R;
-import com.jpresti.randomusers.data.external.RandomUserRequester;
 import com.jpresti.randomusers.data.User;
+import com.jpresti.randomusers.data.external.RandomUserRequester;
 import com.jpresti.randomusers.util.UiUtility;
 
 import java.util.List;
@@ -28,13 +28,12 @@ import java.util.List;
 public class UsersFragment extends Fragment {
 
     private OnGridFragmentInteractionListener mListener;
-    protected RecyclerView recyclerView;
-    protected UserRecyclerViewAdapter adapter;
-    protected View loadingPanel;
+    protected RecyclerView mRecyclerView;
+    protected UserRecyclerViewAdapter mAdapter;
+    protected View mLoadingPanel;
 
     /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
+     * Mandatory empty constructor for the fragment manager to instantiate the fragment
      */
     public UsersFragment() {
     }
@@ -45,18 +44,20 @@ public class UsersFragment extends Fragment {
         if (context instanceof OnGridFragmentInteractionListener) {
             mListener = (OnGridFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString() + " must implement OnGridFragmentInteractionListener");
+            throw new RuntimeException(context.toString()
+                    + " must implement OnGridFragmentInteractionListener");
         }
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_users, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
-            recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(),
+            mRecyclerView = (RecyclerView) view;
+            mRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(),
                     UiUtility.calculateNoOfColumns(getResources(), R.dimen.image_size)));
         }
         return view;
@@ -72,41 +73,45 @@ public class UsersFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-        recyclerView = null;
+        mRecyclerView = null;
     }
 
     protected void setUpRequest() {
-        loadingPanel = getActivity().findViewById(R.id.loadingPanel);
-        loadingPanel.setVisibility(View.VISIBLE);
-        RandomUserRequester.getInstance(getContext()).requestUsers(
-                new RandomUserRequester.DataListener<List<User>>() {
-                    @Override
-                    public void onResponse(List<User> users) {
-                        if (getActivity() != null) {
-                            adapter = new UserRecyclerViewAdapter(getContext(), users, mListener);
-                            recyclerView.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
-                            loadingPanel.setVisibility(View.GONE);
-                        }
-                    }
+        mLoadingPanel = getActivity().findViewById(R.id.loadingPanel);
+        mLoadingPanel.setVisibility(View.VISIBLE);
+        RandomUserRequester.getInstance(getContext()).requestUsers(getDataListener());
+    }
 
-                    @Override
-                    public void onError(String error) {
-                        if (getActivity() != null) {
-                            loadingPanel.setVisibility(View.GONE);
-                            final Snackbar snackbar = Snackbar.make(getActivity().findViewById(R.id.frameLayout),
+    protected RandomUserRequester.DataListener<List<User>> getDataListener() {
+        return new RandomUserRequester.DataListener<List<User>>() {
+            @Override
+            public void onResponse(List<User> users) {
+                if (getActivity() != null) {
+                    mAdapter = new UserRecyclerViewAdapter(getContext(), users, mListener);
+                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+                    mLoadingPanel.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                if (getActivity() != null) {
+                    mLoadingPanel.setVisibility(View.GONE);
+                    final Snackbar snackbar =
+                            Snackbar.make(getActivity().findViewById(R.id.frameLayout),
                                     R.string.usergrid_json_error, Snackbar.LENGTH_INDEFINITE);
 
-                            snackbar.setAction(R.string.usergrid_retry, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    snackbar.dismiss();
-                                    setUpRequest();
-                                }
-                            }).show();
+                    snackbar.setAction(R.string.usergrid_retry, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            snackbar.dismiss();
+                            setUpRequest();
                         }
-                    }
-                });
+                    }).show();
+                }
+            }
+        };
     }
 
     /**

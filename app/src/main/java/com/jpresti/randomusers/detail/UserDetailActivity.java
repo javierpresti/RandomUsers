@@ -1,5 +1,6 @@
 package com.jpresti.randomusers.detail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -18,11 +19,19 @@ import com.jpresti.randomusers.users.UserGridActivity;
  */
 public class UserDetailActivity extends AppCompatActivity {
 
+    private static final String EXTRA_USER = "EXTRA_USER";
+
+    public static Intent getStartIntent(Context context, String userJson) {
+        Intent intent = new Intent(context, UserDetailActivity.class);
+        intent.putExtra(EXTRA_USER, userJson);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail);
-        Toolbar toolbar = findViewById(R.id.detail_toolbar);
+        Toolbar toolbar = findViewById(R.id.dt_toolbar);
         setSupportActionBar(toolbar);
 
         // Show the Up button in the action bar.
@@ -31,16 +40,14 @@ public class UserDetailActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        // If savedInstanceState != null, the fragment will automatically be re-added to its container
+        /* If savedInstanceState != null,
+         * the fragment will automatically be re-added to its container
+         * */
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity using a fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putString(UserDetailFragment.ARG_USER,
-                    getIntent().getStringExtra(UserDetailFragment.ARG_USER));
-            UserDetailFragment fragment = new UserDetailFragment();
-            fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.user_detail_container, fragment)
+            UserDetailFragment fragment =
+                    UserDetailFragment.newInstance(getIntent().getStringExtra(EXTRA_USER));
+            getSupportFragmentManager().beginTransaction().add(R.id.dt_container, fragment)
                     .commit();
         }
     }
