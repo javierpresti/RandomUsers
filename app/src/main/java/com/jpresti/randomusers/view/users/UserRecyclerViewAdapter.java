@@ -1,4 +1,4 @@
-package com.jpresti.randomusers.users;
+package com.jpresti.randomusers.view.users;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,8 +9,8 @@ import android.widget.ImageView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.jpresti.randomusers.R;
-import com.jpresti.randomusers.data.User;
-import com.jpresti.randomusers.data.external.RandomUserRequester;
+import com.jpresti.randomusers.model.User;
+import com.jpresti.randomusers.model.external.RandomUserRequester;
 
 import java.util.List;
 

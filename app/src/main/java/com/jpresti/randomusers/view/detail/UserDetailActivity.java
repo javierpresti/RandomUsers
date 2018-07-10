@@ -1,4 +1,4 @@
-package com.jpresti.randomusers.detail;
+package com.jpresti.randomusers.view.detail;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.jpresti.randomusers.R;
-import com.jpresti.randomusers.users.UserGridActivity;
+import com.jpresti.randomusers.view.users.UserGridActivity;
 
 /**
  * An activity representing a single User detail screen. This

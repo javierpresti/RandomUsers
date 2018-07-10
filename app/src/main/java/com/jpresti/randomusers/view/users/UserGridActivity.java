@@ -1,14 +1,14 @@
-package com.jpresti.randomusers.users;
+package com.jpresti.randomusers.view.users;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.jpresti.randomusers.R;
-import com.jpresti.randomusers.data.User;
-import com.jpresti.randomusers.data.external.RandomUserRequester;
-import com.jpresti.randomusers.detail.UserDetailActivity;
-import com.jpresti.randomusers.detail.UserDetailFragment;
+import com.jpresti.randomusers.model.User;
+import com.jpresti.randomusers.model.external.RandomUserRequester;
+import com.jpresti.randomusers.view.detail.UserDetailActivity;
+import com.jpresti.randomusers.view.detail.UserDetailFragment;
 
 /**
  * An activity representing a grid of Users. This activity

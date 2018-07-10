@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".users.UserGridActivity"
+            android:name=".view.users.UserGridActivity"
             android:label="@string/usergrid_title"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -21,13 +21,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".detail.UserDetailActivity"
+            android:name=".view.detail.UserDetailActivity"
             android:label="@string/userdetail_title"
-            android:parentActivityName=".users.UserGridActivity"
+            android:parentActivityName=".view.users.UserGridActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jpresti.randomusers.users.UserGridActivity" />
+                android:value=".view.users.UserGridActivity" />
         </activity>
     </application>
 

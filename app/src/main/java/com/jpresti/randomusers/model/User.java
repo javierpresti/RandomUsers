@@ -1,4 +1,4 @@
-package com.jpresti.randomusers.data;
+package com.jpresti.randomusers.model;
 
 import com.google.gson.Gson;
 

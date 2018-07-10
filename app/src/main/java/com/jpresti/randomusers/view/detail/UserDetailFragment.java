@@ -1,4 +1,4 @@
-package com.jpresti.randomusers.detail;
+package com.jpresti.randomusers.view.detail;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.jpresti.randomusers.R;
-import com.jpresti.randomusers.data.User;
-import com.jpresti.randomusers.data.external.RandomUserRequester;
-import com.jpresti.randomusers.users.UserGridActivity;
+import com.jpresti.randomusers.model.User;
+import com.jpresti.randomusers.model.external.RandomUserRequester;
+import com.jpresti.randomusers.view.users.UserGridActivity;
 
 /**
  * A fragment representing a single User detail screen.

@@ -8,7 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.jpresti.randomusers.data.external.RandomUserRequester;
+import com.jpresti.randomusers.model.external.RandomUserRequester;
 
 public class NetworkRequester {
 

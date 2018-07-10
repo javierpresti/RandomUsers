@@ -1,4 +1,4 @@
-package com.jpresti.randomusers.users;
+package com.jpresti.randomusers.view.users;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jpresti.randomusers.R;
-import com.jpresti.randomusers.data.User;
-import com.jpresti.randomusers.data.external.RandomUserRequester;
+import com.jpresti.randomusers.model.User;
+import com.jpresti.randomusers.model.external.RandomUserRequester;
 import com.jpresti.randomusers.util.UiUtility;
 
 import java.util.List;

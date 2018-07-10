@@ -1,4 +1,4 @@
-package com.jpresti.randomusers.data.external;
+package com.jpresti.randomusers.model.external;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,7 +9,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
-import com.jpresti.randomusers.data.User;
+import com.jpresti.randomusers.model.User;
 import com.jpresti.randomusers.util.LogUtils;
 import com.jpresti.randomusers.util.NetworkRequester;
 

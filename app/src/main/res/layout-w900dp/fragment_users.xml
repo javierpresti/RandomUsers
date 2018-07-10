@@ -10,7 +10,7 @@
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
     android:showDividers="middle"
-    tools:context=".users.UserGridActivity">
+    tools:context=".view.users.UserGridActivity">
 
     <!--
     This layout is a two-pane layout for the Users
@@ -20,7 +20,7 @@
         style="@style/UsersGrid"
         android:layout_width="@dimen/item_width"
         app:layoutManager="android.support.v7.widget.GridLayoutManager"
-        tools:context="com.jpresti.randomusers.users.UserGridActivity"
+        tools:context=".view.users.UserGridActivity"
         tools:listitem="@layout/item_image_grid" />
 
     <LinearLayout

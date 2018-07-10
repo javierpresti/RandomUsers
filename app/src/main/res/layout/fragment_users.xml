@@ -6,5 +6,5 @@
     style="@style/UsersGrid"
     android:layout_width="match_parent"
     app:layoutManager="android.support.v7.widget.GridLayoutManager"
-    tools:context=".users.UsersFragment"
+    tools:context=".view.users.UsersFragment"
     tools:listitem="@layout/item_image_grid" />
